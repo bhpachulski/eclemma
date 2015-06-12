@@ -11,11 +11,32 @@
  ******************************************************************************/
 package com.mountainminds.eclemma.internal.ui;
 
-import java.net.URL;
+import static com.mountainminds.eclemma.core.ISessionExporter.ExportFormat.XML;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -29,6 +50,7 @@ import org.osgi.framework.BundleContext;
 
 import com.mountainminds.eclemma.core.CoverageTools;
 import com.mountainminds.eclemma.core.ICoverageSession;
+import com.mountainminds.eclemma.core.ISessionExporter;
 import com.mountainminds.eclemma.core.ISessionListener;
 import com.mountainminds.eclemma.internal.ui.annotation.EditorTracker;
 import com.mountainminds.eclemma.internal.ui.coverageview.CoverageView;
@@ -130,6 +152,75 @@ public class EclEmmaUIPlugin extends AbstractUIPlugin {
         log(e);
       }
     }
+
+    try {
+
+      ArrayList<IPackageFragmentRoot> root = new ArrayList<IPackageFragmentRoot>();
+      root.addAll(CoverageTools.getSessionManager().getActiveSession()
+          .getScope());
+
+      IProject project = root.get(0).getJavaProject().getProject();
+
+      IPath projectPath = project.getLocation();
+
+      String folderTrack = "coverageTrack";
+
+      File f = new File(projectPath.toOSString() + "/" + folderTrack);
+      if (!f.exists()) {
+        f.mkdir();
+      }
+
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy_M_d_HH_mm_ss");
+      // String workspaceFolder = ResourcesPlugin.getWorkspace().getRoot()
+      // .getLocation().toString();
+
+      CoverageTools.getSessionManager().refreshActiveSession();
+      ICoverageSession active = CoverageTools.getSessionManager()
+          .getActiveSession();
+      final ISessionExporter se = CoverageTools.getExporter(active);
+      se.setFormat(XML);
+      se.setDestination(projectPath.toOSString() + "/" + folderTrack
+          + "/track_" + sdf.format(new Date()) + ".xml");
+
+      final IRunnableWithProgress op = new IRunnableWithProgress() {
+        public void run(IProgressMonitor monitor)
+            throws InvocationTargetException, InterruptedException {
+          try {
+            se.export(monitor);
+          } catch (Exception e) {
+
+            MessageDialog.openInformation(getWorkbench()
+                .getActiveWorkbenchWindow().getShell(), "ERRO (1)",
+                "Erro ao gerar aquivo de acompanhamento de cobertura.");
+
+            // throw new InvocationTargetException(e);
+          }
+        }
+      };
+
+      op.run(new NullProgressMonitor());
+
+    } catch (Exception e) {
+
+      StringWriter errors = new StringWriter();
+      e.printStackTrace(new PrintWriter(errors));
+
+      try {
+        Writer writer = null;
+        writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(ResourcesPlugin.getWorkspace().getRoot()
+                .getLocation().toString()
+                + "/coverage.txt", true), "utf-8"));
+        writer.write(errors.toString());
+        writer.close();
+      } catch (Exception ee) {
+      }
+
+      MessageDialog.openInformation(getWorkbench().getActiveWorkbenchWindow()
+          .getShell(), "ERRO (2)", errors.toString());
+
+    }
+
   }
 
   public Shell getShell() {
