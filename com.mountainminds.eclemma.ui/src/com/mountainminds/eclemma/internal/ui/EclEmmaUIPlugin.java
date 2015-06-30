@@ -155,32 +155,28 @@ public class EclEmmaUIPlugin extends AbstractUIPlugin {
 
     try {
 
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy_M_d_HH_mm_ss");
       ArrayList<IPackageFragmentRoot> root = new ArrayList<IPackageFragmentRoot>();
       root.addAll(CoverageTools.getSessionManager().getActiveSession()
           .getScope());
 
       IProject project = root.get(0).getJavaProject().getProject();
-
       IPath projectPath = project.getLocation();
 
-      String folderTrack = "coverageTrack";
+      String folderTrack = "tddCriteria/coverageTrack";
 
       File f = new File(projectPath.toOSString() + "/" + folderTrack);
       if (!f.exists()) {
         f.mkdir();
       }
 
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy_M_d_HH_mm_ss");
-      // String workspaceFolder = ResourcesPlugin.getWorkspace().getRoot()
-      // .getLocation().toString();
-
       CoverageTools.getSessionManager().refreshActiveSession();
       ICoverageSession active = CoverageTools.getSessionManager()
           .getActiveSession();
       final ISessionExporter se = CoverageTools.getExporter(active);
       se.setFormat(XML);
-      se.setDestination(projectPath.toOSString() + "/" + folderTrack
-          + "/track_" + sdf.format(new Date()) + ".xml");
+      se.setDestination(projectPath.toOSString() + "/" + folderTrack + "/"
+          + sdf.format(new Date()) + ".xml");
 
       final IRunnableWithProgress op = new IRunnableWithProgress() {
         public void run(IProgressMonitor monitor)
@@ -193,7 +189,6 @@ public class EclEmmaUIPlugin extends AbstractUIPlugin {
                 .getActiveWorkbenchWindow().getShell(), "ERRO (1)",
                 "Erro ao gerar aquivo de acompanhamento de cobertura.");
 
-            // throw new InvocationTargetException(e);
           }
         }
       };
