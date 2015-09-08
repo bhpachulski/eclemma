@@ -64,7 +64,9 @@ public class EclEmmaUIPlugin extends AbstractUIPlugin {
 
   /** Identifier for the 'coverage' launch group. */
   public static final String ID_COVERAGE_LAUNCH_GROUP = ID
-      + ".launchGroup.coverage"; //$NON-NLS-1$  
+      + ".launchGroup.coverage"; //$NON-NLS-1$
+
+  public static String ID_COVERAGE_TDD_ACTION_LAUNCH = "=X";
 
   // Icons used by the Plugin
 
@@ -168,6 +170,18 @@ public class EclEmmaUIPlugin extends AbstractUIPlugin {
       File f = new File(projectPath.toOSString() + "/" + folderTrack);
       if (!f.exists()) {
         f.mkdir();
+      }
+
+      // Criando arquivo de estágio de TDD
+      try {
+        Writer writer = null;
+        writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(projectPath.toOSString() + "/" + folderTrack
+                + "/tddStageTrack.txt", true), "utf-8"));
+        writer.write(sdf.format(new Date()) + ":"
+            + ID_COVERAGE_TDD_ACTION_LAUNCH + " \n");
+        writer.close();
+      } catch (Exception ee) {
       }
 
       CoverageTools.getSessionManager().refreshActiveSession();

@@ -44,6 +44,7 @@
            </enablement>
   		 </contextualLaunch>
       </shortcut>
+      
       <shortcut
             label="%JUnitTestShortcut.label"
             icon="$nl$/icons/full/etool16/junit_launch.gif"
@@ -58,6 +59,7 @@
            </enablement>
          </contextualLaunch>
       </shortcut>
+
       <shortcut
             class="com.mountainminds.eclemma.ui.launching.CoverageLaunchShortcut:org.testng.eclipse.shortcut"
             icon="$nl$/icons/full/etool16/testng_launch.gif"
@@ -174,8 +176,68 @@
       </shortcut>
    </extension>
    
+   <!-- atalho para menu na ide na tela principal -->
    <extension
          point="org.eclipse.ui.actionSets">
+
+      <actionSet
+          id="PluginCopyTest.actionSet"
+          label="TDDCriteria Menu"
+          visible="true">
+
+          <menu
+                id="tddCriteriaMenu"
+                label="TDDCriteria Menu">
+             <separator
+                   name="TDDCriteriaGroup">
+             </separator>
+          </menu>
+
+         <!-- TDD Refactor Action -->
+         <action
+               class="com.mountainminds.eclemma.internal.ui.actions.TDDCriteriaRefactorCoverageToolbarAction"
+               
+               disabledIcon="$nl$/icons/full/dlcl16/refactor.png"
+                  hoverIcon="$nl$/icons/full/elcl16/refactor.png"
+                       icon="$nl$/icons/full/elcl16/refactor.png"
+               
+               id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Refactor"
+               label="Refactor (TDD Criteria)"
+               style="push"
+               menubarPath="tddCriteriaMenu/TDDCriteriaGroup"
+               toolbarPath="TDDCriteriaGroup"/>
+
+         <!-- TDD GREEN Action -->
+         <action
+               class="com.mountainminds.eclemma.internal.ui.actions.TDDCriteriaGreenCoverageToolbarAction"
+               
+               disabledIcon="$nl$/icons/full/dlcl16/green.png"
+                  hoverIcon="$nl$/icons/full/elcl16/green.png"
+                       icon="$nl$/icons/full/elcl16/green.png"
+               
+               id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Green"
+               label="GREEN (TDD Criteria)"
+               style="push"
+               menubarPath="tddCriteriaMenu/TDDCriteriaGroup"
+               toolbarPath="TDDCriteriaGroup"/>
+
+         <!-- TDD RED Action -->
+         <action
+            class="com.mountainminds.eclemma.internal.ui.actions.TDDCriteriaRedCoverageToolbarAction"
+            
+            disabledIcon="$nl$/icons/full/dlcl16/red.png"
+               hoverIcon="$nl$/icons/full/elcl16/red.png"
+                    icon="$nl$/icons/full/elcl16/red.png"
+            
+            id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Red"
+            label="RED (TDD Criteria)"
+            style="push"
+            menubarPath="tddCriteriaMenu/TDDCriteriaGroup"
+            toolbarPath="TDDCriteriaGroup" />
+
+      </actionSet>
+
+
       <actionSet
             id="com.mountainminds.eclemma.ui.CoverageActionSet"
             label="%CoverageActionSet.label"
@@ -187,15 +249,19 @@
             <separator name="relaunchGroup"/>
             <separator name="emptyLaunchGroup"/>
          </menu>
+
          <action
                class="com.mountainminds.eclemma.internal.ui.actions.CoverageToolbarAction"
+               
                disabledIcon="$nl$/icons/full/dlcl16/runcoverage.gif"
                hoverIcon="$nl$/icons/full/elcl16/runcoverage.gif"
                icon="$nl$/icons/full/elcl16/runcoverage.gif"
+               
                id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction"
                label="%CoverageDropDownAction.label"
                style="pulldown"
                toolbarPath="org.eclipse.debug.ui.launchActionSet/debug"/>
+
          <action
                class="com.mountainminds.eclemma.internal.ui.actions.OpenCoverageConfigurations"
                definitionId="com.mountainminds.eclemma.ui.commands.OpenCoverageConfiguration"
@@ -225,6 +291,8 @@
                menubarPath="org.eclipse.ui.run/relaunchGroup"/>
       </actionSet>
    </extension>
+
+
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -744,6 +812,10 @@
             id="com.mountainminds.eclemma.ui.coveragePreferences"
             label="%keywords.coveragePreferences"/>
    </extension>
+
+   
+
+   <!-- Atalho para menu contextual -->
    <extension
          point="org.eclipse.ui.popupMenus">
        <objectContribution
@@ -762,6 +834,8 @@
          </enablement>
       </objectContribution>
    </extension>
+
+
    <extension
          point="org.eclipse.ui.editors">
       <editor
