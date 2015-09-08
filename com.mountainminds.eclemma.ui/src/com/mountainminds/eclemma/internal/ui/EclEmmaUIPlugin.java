@@ -66,7 +66,7 @@ public class EclEmmaUIPlugin extends AbstractUIPlugin {
   public static final String ID_COVERAGE_LAUNCH_GROUP = ID
       + ".launchGroup.coverage"; //$NON-NLS-1$
 
-  public static String ID_COVERAGE_TDD_ACTION_LAUNCH = "=X";
+  public static String ID_COVERAGE_TDD_ACTION_LAUNCH = "";
 
   // Icons used by the Plugin
 

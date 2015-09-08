@@ -197,9 +197,9 @@
          <action
                class="com.mountainminds.eclemma.internal.ui.actions.TDDCriteriaRefactorCoverageToolbarAction"
                
-               disabledIcon="$nl$/icons/full/dlcl16/refactor.png"
-                  hoverIcon="$nl$/icons/full/elcl16/refactor.png"
-                       icon="$nl$/icons/full/elcl16/refactor.png"
+               disabledIcon="tddCriteriaImg/refactor.png"
+                  hoverIcon="tddCriteriaImg/refactor.png"
+                       icon="tddCriteriaImg/refactor.png"
                
                id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Refactor"
                label="Refactor (TDD Criteria)"
@@ -211,9 +211,9 @@
          <action
                class="com.mountainminds.eclemma.internal.ui.actions.TDDCriteriaGreenCoverageToolbarAction"
                
-               disabledIcon="$nl$/icons/full/dlcl16/green.png"
-                  hoverIcon="$nl$/icons/full/elcl16/green.png"
-                       icon="$nl$/icons/full/elcl16/green.png"
+               disabledIcon="tddCriteriaImg/green.png"
+                  hoverIcon="tddCriteriaImg/green.png"
+                       icon="tddCriteriaImg/green.png"
                
                id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Green"
                label="GREEN (TDD Criteria)"
@@ -225,9 +225,9 @@
          <action
             class="com.mountainminds.eclemma.internal.ui.actions.TDDCriteriaRedCoverageToolbarAction"
             
-            disabledIcon="$nl$/icons/full/dlcl16/red.png"
-               hoverIcon="$nl$/icons/full/elcl16/red.png"
-                    icon="$nl$/icons/full/elcl16/red.png"
+            disabledIcon="tddCriteriaImg/red.png"
+               hoverIcon="tddCriteriaImg/red.png"
+                    icon="tddCriteriaImg/red.png"
             
             id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Red"
             label="RED (TDD Criteria)"
