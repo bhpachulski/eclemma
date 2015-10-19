@@ -203,7 +203,7 @@
                
                id="com.mountainminds.eclemma.ui.actions.CoverageDropDownAction.TDD.Refactor"
                label="Refactor (TDD Criteria)"
-               style="push"
+               style="toggle"
                menubarPath="tddCriteriaMenu/TDDCriteriaGroup"
                toolbarPath="TDDCriteriaGroup"/>
 
